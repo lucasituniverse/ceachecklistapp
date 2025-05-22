@@ -39,7 +39,7 @@ export default function Formulario() {
 
     const [uf, setUf] = useState<string>("");
     const [listaLoja, setListaLoja] = useState<Loja[]>([])
-    useEffect(() => { if (uf !== "") buscarLojasPeloUf(uf) }, [uf]);
+    useEffect(() => { if (uf !== "") buscarLojasPeloUf(uf), setLojaSelecionada("") }, [uf]);
     async function buscarLojasPeloUf(uf: string){
         try{
             await buscar(`/loja/uf/${uf}`, setListaLoja);
@@ -52,7 +52,23 @@ export default function Formulario() {
         }
     }
 
+    const [loja, setLoja] = useState<Loja>({} as Loja);
     const [lojaSelecionada, setLojaSelecionada] = useState<string>("");
+    useEffect(() => { if (lojaSelecionada !== "") buscarLoja(lojaSelecionada) }, [lojaSelecionada]);
+    async function buscarLoja(loja: string){
+        try{
+            await buscar(`/loja/${loja}`, setLoja);
+        }
+        catch(erro: any){
+            toast("Erro ao buscar Loja", { description: `${erro}`,
+                style: { color: "#FF6347",
+                },
+            });
+        }
+
+    }
+
+
     const [listaPdvs, setListaPdvs] = useState<Pdv[]>([]);
     useEffect(() => { if (lojaSelecionada !== "") buscarPdvPorLoja(lojaSelecionada)}, [lojaSelecionada]);
     async function buscarPdvPorLoja(loja: string){
@@ -236,7 +252,7 @@ export default function Formulario() {
                                 </div>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="loja">Loja</Label>
+                                    <Label htmlFor="loja" className="mb-2">Loja</Label>
                                     <Select value={lojaSelecionada} onValueChange={setLojaSelecionada} required>
                                         <SelectTrigger id="loja">
                                         <SelectValue placeholder="Selecione uma loja" />
@@ -246,18 +262,18 @@ export default function Formulario() {
                                                 <SelectItem value={loja.id} key={loja.id}>{loja.id}</SelectItem>
                                             ))}
                                         </SelectContent>
-                                    </Select>
+                                    </Select>                                                                
                                 </div>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="pdv">PDV</Label>
+                                    <Label htmlFor="pdv">PDVs {lojaSelecionada ? ` - Qtd: ${loja.quantidadePdvs}` : ""}</Label>
                                     <Select value={idPdv} onValueChange={e => setIdPdv(e)} required>
                                         <SelectTrigger id="pdv">
                                         <SelectValue placeholder="Selecione o PDV" />
                                         </SelectTrigger>
                                         <SelectContent position="popper">
                                             {listaPdvs.map((pdv) => (
-                                                <SelectItem value={pdv.id} key={pdv.id}>{pdv.id}</SelectItem>
+                                                <SelectItem value={pdv.id} key={pdv.id}>{pdv.id} {pdv.status}</SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
@@ -364,7 +380,6 @@ export default function Formulario() {
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-end mt-4">
-                            {/* <Button variant="outline">Cancelar</Button> */}
                             <Button type="submit"
                             onClick={() => setLoader(true)}>{ loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }</Button>
                         </CardFooter>
