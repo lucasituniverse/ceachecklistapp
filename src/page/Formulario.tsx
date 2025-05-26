@@ -208,18 +208,18 @@ export default function Formulario() {
         <>
             <form onSubmit={e => atualizarPdv(e)}>
                 <div className="h-vh flex justify-center items-center">
-                    <Card className="w-screen mx-6 lg:mx-60 xl:mx-90 my-16">
+                    <Card className="w-screen mx-6 my-6 lg:my-16 lg:mx-60 xl:my-16 xl:mx-90">
                         <CardHeader>
                             <div className="flex justify-center">
-                                <img className="my-5 w-50" src={itbackground} alt="Imagem da IT Universe"/>
+                                <img className="my-5 w-48" src={itbackground} alt="Imagem da IT Universe"/>
                             </div>
-                            <CardTitle>Checklist C&A</CardTitle>
+                            <CardTitle className="text-xl">Checklist C&A</CardTitle>
                             <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div className="grid w-full items-center gap-4">
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="uf">Estado</Label>
+                                    <Label htmlFor="uf" className="text-md">Estado</Label>
                                     <Select value={uf} onValueChange={(e) => setUf(e)} required>
                                         <SelectTrigger id="uf">
                                         <SelectValue placeholder="Selecione o Estado" />
@@ -254,9 +254,9 @@ export default function Formulario() {
                                 </div>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="loja" className="mb-2">Loja</Label>
+                                    <Label htmlFor="loja" className="text-md mb-2">Loja</Label>
                                     <span>
-                                        <p>{horarioLoja}</p>
+                                        <p className="text-sm">{horarioLoja}</p>
                                     </span>
                                     <Select value={lojaSelecionada} onValueChange={setLojaSelecionada} required>
                                         <SelectTrigger id="loja">
@@ -271,7 +271,7 @@ export default function Formulario() {
                                 </div>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="pdv">PDVs</Label>
+                                    <Label htmlFor="pdv" className="text-md">PDVs</Label>
                                     <span>
                                         <p className="text-sm">{lojaSelecionada ? `Quantidade: ${loja.quantidadePdvs}` : ""}</p>
                                     </span>
@@ -288,7 +288,7 @@ export default function Formulario() {
                                 </div>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="existe">O PDV selecionado existe ?</Label>
+                                    <Label htmlFor="existe" className="text-md">O PDV selecionado existe ?</Label>
                                     <Select value={pdvExiste} onValueChange={e => setPdvExiste(e)} required>
                                         <SelectTrigger id="existe">
                                         <SelectValue placeholder="Selecione" />
@@ -303,7 +303,7 @@ export default function Formulario() {
                                 <Separator className="my-4"/>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label>Data da visita</Label>
+                                    <Label className="text-md">Data da visita</Label>
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <Button variant={"outline"}
@@ -322,7 +322,7 @@ export default function Formulario() {
                                 </div>
                                 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="tecnico">Técnico</Label>
+                                    <Label htmlFor="tecnico" className="text-md">Técnico</Label>
                                         <Select value={tecnico} onValueChange={e => setTecnico(e)} required>
                                             <SelectTrigger id="tecnico">
                                             <SelectValue placeholder="Selecione o técnico" />
@@ -351,7 +351,7 @@ export default function Formulario() {
                                 </span>
 
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
-                                    <Label htmlFor="antes">PDV Antes *Até 3 imagens</Label>
+                                    <Label htmlFor="antes" className="text-md">PDV Antes - até 3 imagens</Label>
                                     <Input id="antes" type="file" accept="image/*" multiple required ref={inputAntesRef}
                                         onChange={(e) => {
                                             const arquivosSelecionados = Array.from(e.target.files || []);
@@ -359,7 +359,7 @@ export default function Formulario() {
                                         }}/>
                                 </div>
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
-                                    <Label htmlFor="depois">PDV Depois *Até 3 imagens</Label>
+                                    <Label htmlFor="depois" className="text-md">PDV Depois - até 3 imagens</Label>
                                     <Input id="antes" type="file" accept="image/*" multiple required ref={inputDepoisRef}
                                         onChange={(e) => {
                                             const arquivosSelecionados = Array.from(e.target.files || []);
@@ -369,7 +369,7 @@ export default function Formulario() {
                                 </div>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="status">Status</Label>
+                                    <Label htmlFor="status" className="text-md">Status</Label>
                                         <Select value={status} onValueChange={e => setStatus(e)} required>
                                             <SelectTrigger id="status">
                                             <SelectValue placeholder="Selecione o status" />
@@ -381,7 +381,7 @@ export default function Formulario() {
                                         </Select>
                                 </div>
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2 max-h-40">
-                                    <Label htmlFor="intercorrencia">Intercorrências</Label>
+                                    <Label htmlFor="intercorrencia" className="text-md">Intercorrências</Label>
                                     <Textarea placeholder="Descreva brevemente o ocorrido, se necessário." value={intercorrencia} onChange={e => setIntercorrencia(e.target.value)} />
                                 </div>
 
