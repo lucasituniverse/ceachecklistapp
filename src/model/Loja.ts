@@ -6,7 +6,7 @@ export default interface Loja{
     quantidadePdvs: number;
     diaria: number;
     uf: string;
-
+    local: string;
     pdvs: Pdv[];
     servidor: Servidor;
 }

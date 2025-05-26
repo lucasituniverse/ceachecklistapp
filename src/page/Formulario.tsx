@@ -39,7 +39,7 @@ export default function Formulario() {
 
     const [uf, setUf] = useState<string>("");
     const [listaLoja, setListaLoja] = useState<Loja[]>([])
-    useEffect(() => { if (uf !== "") buscarLojasPeloUf(uf), setLojaSelecionada("") }, [uf]);
+    useEffect(() => { if (uf !== "") buscarLojasPeloUf(uf), setLojaSelecionada(""), setHorarioLoja("") }, [uf]);
     async function buscarLojasPeloUf(uf: string){
         try{
             await buscar(`/loja/uf/${uf}`, setListaLoja);
@@ -52,9 +52,12 @@ export default function Formulario() {
         }
     }
 
+    const [horarioLoja, setHorarioLoja] = useState<string>();
     const [loja, setLoja] = useState<Loja>({} as Loja);
     const [lojaSelecionada, setLojaSelecionada] = useState<string>("");
     useEffect(() => { if (lojaSelecionada !== "") buscarLoja(lojaSelecionada) }, [lojaSelecionada]);
+    useEffect(() => { if(loja.local === "rua") setHorarioLoja("Horário: 10:00 às 21:00")}, [loja]);
+    useEffect(() => { if(loja.local === "shopping") setHorarioLoja("Horário: 09:00 às 22:00")}, [loja]);
     async function buscarLoja(loja: string){
         try{
             await buscar(`/loja/${loja}`, setLoja);
@@ -67,7 +70,6 @@ export default function Formulario() {
         }
 
     }
-
 
     const [listaPdvs, setListaPdvs] = useState<Pdv[]>([]);
     useEffect(() => { if (lojaSelecionada !== "") buscarPdvPorLoja(lojaSelecionada)}, [lojaSelecionada]);
@@ -253,6 +255,9 @@ export default function Formulario() {
 
                                 <div className="flex flex-col space-y-1.5">
                                     <Label htmlFor="loja" className="mb-2">Loja</Label>
+                                    <span>
+                                        <p>{horarioLoja}</p>
+                                    </span>
                                     <Select value={lojaSelecionada} onValueChange={setLojaSelecionada} required>
                                         <SelectTrigger id="loja">
                                         <SelectValue placeholder="Selecione uma loja" />
@@ -266,7 +271,10 @@ export default function Formulario() {
                                 </div>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="pdv">PDVs {lojaSelecionada ? ` - Qtd: ${loja.quantidadePdvs}` : ""}</Label>
+                                    <Label htmlFor="pdv">PDVs</Label>
+                                    <span>
+                                        <p className="text-sm">{lojaSelecionada ? `Quantidade: ${loja.quantidadePdvs}` : ""}</p>
+                                    </span>
                                     <Select value={idPdv} onValueChange={e => setIdPdv(e)} required>
                                         <SelectTrigger id="pdv">
                                         <SelectValue placeholder="Selecione o PDV" />
