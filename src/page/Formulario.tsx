@@ -56,8 +56,8 @@ export default function Formulario() {
     const [loja, setLoja] = useState<Loja>({} as Loja);
     const [lojaSelecionada, setLojaSelecionada] = useState<string>("");
     useEffect(() => { if (lojaSelecionada !== "") buscarLoja(lojaSelecionada) }, [lojaSelecionada]);
-    useEffect(() => { if(loja.local === "rua") setHorarioLoja("Horário: 10:00 às 21:00")}, [loja]);
-    useEffect(() => { if(loja.local === "shopping") setHorarioLoja("Horário: 09:00 às 22:00")}, [loja]);
+    useEffect(() => { if(loja.local === "Rua") setHorarioLoja("Horário: 10:00 às 21:00")}, [loja]);
+    useEffect(() => { if(loja.local === "Shopping") setHorarioLoja("Horário: 09:00 às 22:00")}, [loja]);
     async function buscarLoja(loja: string){
         try{
             await buscar(`/loja/${loja}`, setLoja);
@@ -118,6 +118,7 @@ export default function Formulario() {
 
     const [antes, setAntes] = useState<File[]>([]);
     const [depois, setDepois] = useState<File[]>([]);
+
 
     const inputAntesRef = useRef<HTMLInputElement>(null);
     const inputDepoisRef = useRef<HTMLInputElement>(null);
@@ -352,18 +353,25 @@ export default function Formulario() {
 
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
                                     <Label htmlFor="antes" className="text-md">PDV Antes - até 3 imagens</Label>
-                                    <Input id="antes" type="file" accept="image/*" multiple required ref={inputAntesRef}
+                                    <Input id="antes" type="file" accept="image/*" multiple required ref={inputAntesRef} disabled={antes.length >= 3}
                                         onChange={(e) => {
-                                            const arquivosSelecionados = Array.from(e.target.files || []);
-                                            setAntes((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
-                                        }}/>
+                                            const files = e.target.files;
+                                            if (!files) return;
+                                            const fileArray = Array.from(files);
+                                            const newFiles = fileArray.slice(0, 3 - antes.length); // impede ultrapassar 3
+                                            setAntes((prev) => [...prev, ...newFiles]);
+                                        }}
+                                    />
                                 </div>
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
                                     <Label htmlFor="depois" className="text-md">PDV Depois - até 3 imagens</Label>
-                                    <Input id="antes" type="file" accept="image/*" multiple required ref={inputDepoisRef}
+                                    <Input id="depois" type="file" accept="image/*" multiple required ref={inputDepoisRef} disabled={depois.length >= 3}
                                         onChange={(e) => {
-                                            const arquivosSelecionados = Array.from(e.target.files || []);
-                                            setDepois((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
+                                            const files = e.target.files;
+                                            if (!files) return;
+                                            const fileArray = Array.from(files);
+                                            const newFiles = fileArray.slice(0, 3 - depois.length);
+                                            setDepois((prev) => [...prev, ...newFiles]);
                                         }}
                                     />
                                 </div>
