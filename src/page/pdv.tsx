@@ -211,7 +211,7 @@ export default function Formulario() {
                             <div className="flex justify-center">
                                 <img className="my-5 w-50" src={itbackground} alt="Imagem da IT Universe"/>
                             </div>
-                            <CardTitle>Checklist C&A</CardTitle>
+                            <CardTitle>Checklist PDVs</CardTitle>
                             <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
                         </CardHeader>
                         <CardContent>
