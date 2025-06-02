@@ -1,5 +1,5 @@
 import type Pdv from "./Pdv";
-import type Servidor from "./Servidor";
+import type Servidor from "./Srv";
 
 export default interface Loja{
     id: string ;

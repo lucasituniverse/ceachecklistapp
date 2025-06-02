@@ -23,7 +23,7 @@ import axios from "axios"
 import { useRef } from "react";
 
 
-export default function Formulario() {
+export default function FormPdv() {
     
     const [loader, setLoader] = useState<Boolean>(false);
     

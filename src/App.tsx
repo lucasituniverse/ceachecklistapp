@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./page/Home";
 import { Toaster } from "sonner";
-import Pdv from "./page/pdv";
-import Srv from "./page/srv";
+import FormPdv from "./page/FormPdv";
+import FormSrv from "./page/FormSrv";
 
 export default function App() {
 
@@ -11,10 +11,10 @@ export default function App() {
             <Toaster />
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={ <Srv /> }/>
+                    <Route path="/" element={ <FormSrv /> }/>
                     <Route path="/home" element={ <Home /> }/>
-                    <Route path="/pdv" element={ <Pdv /> }/>
-                    <Route path="/srv" element={ <Srv /> }/>
+                    <Route path="/pdv" element={ <FormPdv /> }/>
+                    <Route path="/srv" element={ <FormSrv /> }/>
                 </Routes>
             </BrowserRouter>
         </>

@@ -1,6 +1,6 @@
 import type Loja from "./Loja";
 
-export default interface Servidor{
+export default interface Srv{
     id: string;
     fabricante: string;
     modelo: string;
