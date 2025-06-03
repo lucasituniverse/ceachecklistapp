@@ -19,10 +19,12 @@ import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
 import { useRef } from "react";
 import type Srv from "@/model/Srv"
+import { useNavigate } from "react-router-dom"
 
 export default function FormSrv(){
 
     const [loader, setLoader] = useState<boolean>(false);
+    const navigate = useNavigate();
     
     const [uf, setUf] = useState<string>("");
     const [listaLoja, setListaLoja] = useState<Loja[]>([]);
@@ -136,8 +138,13 @@ export default function FormSrv(){
                             <div className="flex justify-center">
                                 <img className="my-5 w-50" src={itbackground} alt="Imagem da IT Universe"/>
                             </div>
-                            <CardTitle>Checklist SRVs</CardTitle>
-                            <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
+                            <div className="flex justify-between">
+                                <div>
+                                    <CardTitle>Checklist SRVs</CardTitle>
+                                    <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
+                                </div>
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/pdv")}>Checklist PDV</Button>
+                            </div>
                         </CardHeader>
                         <CardContent>
                             <div className="grid w-full items-center gap-4">
@@ -278,7 +285,7 @@ export default function FormSrv(){
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-end mt-4">
-                            <Button type="submit"
+                            <Button type="submit" className="cursor-pointer"
                                 onClick={() => setLoader(true)}>{ loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }
                             </Button>
                         </CardFooter>

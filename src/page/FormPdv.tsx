@@ -20,11 +20,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom"
 
 
 export default function FormPdv() {
     
     const [loader, setLoader] = useState<Boolean>(false);
+    const navigate = useNavigate();
     
     const dataAtual: string = new Date().toLocaleString(navigator.language, {
     weekday: 'long',
@@ -181,8 +183,13 @@ export default function FormPdv() {
                             <div className="flex justify-center">
                                 <img className="my-5 w-50" src={itbackground} alt="Imagem da IT Universe"/>
                             </div>
-                            <CardTitle>Checklist PDVs</CardTitle>
-                            <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
+                            <div className="flex justify-between">
+                                <div>
+                                    <CardTitle>Checklist PDVs</CardTitle>
+                                    <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
+                                </div>
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/srv")}>Checklist SRV</Button>
+                            </div>
                         </CardHeader>
                         <CardContent>
                             <div className="grid w-full items-center gap-4">
@@ -351,7 +358,7 @@ export default function FormPdv() {
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-end mt-4">
-                            <Button type="submit"
+                            <Button type="submit" className="cursor-pointer"
                             onClick={() => setLoader(true)}>{ loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }</Button>
                         </CardFooter>
                     </Card>
