@@ -1,15 +1,27 @@
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@/components/ui/select"
 import {Card,CardContent,CardDescription,CardFooter,CardHeader,CardTitle} from "@/components/ui/card"
+import { Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover"
+import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { CalendarIcon } from "lucide-react"
 import { useEffect, useState, type FormEvent } from "react";
+import { cn } from "@/lib/utils"
 import { MoonLoader } from "react-spinners";
 import itbackground from "../assets/itbackground.png";
+import lanterna from "../assets/lantern.png";
 import { Separator } from "@/components/ui/separator"
 import type Loja from "@/model/Loja"
-import { buscar } from "@/service/service"
+import { atualizar, buscar, uploadBucketS3 } from "@/service/service"
+import type Pdv from "@/model/Pdv"
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
-import type Srv from "@/model/Srv";
+import { Input } from "@/components/ui/input"
+import axios from "axios"
+import { useRef } from "react";
+import type Srv from "@/model/Srv"
 
 export default function FormSrv(){
 
@@ -17,7 +29,7 @@ export default function FormSrv(){
     
     const [uf, setUf] = useState<string>("");
     const [listaLoja, setListaLoja] = useState<Loja[]>([]);
-    useEffect(() =>{ if(uf !== "") buscarLojasPeloUf(uf)}, [uf]);
+    useEffect(() =>{ if(uf) buscarLojasPeloUf(uf)}, [uf]);
     async function buscarLojasPeloUf(uf: string){
         try{
             await buscar(`/loja/uf/${uf}`, setListaLoja);
@@ -31,8 +43,9 @@ export default function FormSrv(){
     }
 
     const [lojaSelecionada, setLojaSelecionada] = useState<string>("")
+    const [srvSelecionado, setSrvSelecionado] = useState<string>("");
     const [srv, setSrv] = useState<Srv>({} as Srv);
-    useEffect(() => { if(lojaSelecionada !== "") buscarSrvPorLoja(lojaSelecionada)},[lojaSelecionada]);
+    useEffect(() => { if(lojaSelecionada) buscarSrvPorLoja(lojaSelecionada)},[lojaSelecionada]);
     async function buscarSrvPorLoja(idLoja: string){
         try{
             await buscar(`/srv/loja/${idLoja}`, setSrv);
@@ -45,13 +58,83 @@ export default function FormSrv(){
         }
     }
 
-    const [srvSelecionado, setSrvSelecionado] = useState<string>("");
+    const [data, setData] = useState<Date>();
+    useEffect(() => {if(data) atualizarDadosSrv("dataTroca", data.toISOString())}, [data])
+
+    const [tecnico, setTecnico] = useState<string>("");
+    useEffect(() => {if(tecnico) atualizarDadosSrv("tecnico", tecnico)},[tecnico])
+
+    const inputAntesRef = useRef<HTMLInputElement>(null);
+    const inputDepoisRef = useRef<HTMLInputElement>(null);
+    const [antes, setAntes] = useState<File[]>([]);
+    const [depois, setDepois] = useState<File[]>([]);
+
+    const [status, setStatus] = useState<string>(""); 
+    useEffect(() => { if(status) atualizarDadosSrv("status", status)}, [status])
+
+    const [intercorrencia, setIntercorrencia] = useState<string>("");
+    useEffect(() => { if(intercorrencia) atualizarDadosSrv("intercorrencia", intercorrencia)}, [intercorrencia]);
+
+    function atualizarDadosSrv(atributo: string, valor: string){
+        setSrv({
+            ...srv,
+            [atributo]: valor
+        });
+    }
+
+    async function atualizarSrv(e: FormEvent<HTMLFormElement>){
+        e.preventDefault();
+        setLoader(true);
+
+        const imagensAntes = await uploadBucketS3(antes);
+        const imagensDepois = await uploadBucketS3(depois);
+
+        const srvFinal: Srv = {
+            ...srv,
+            antes: imagensAntes,
+            depois: imagensDepois
+        }
+
+        try{
+            await atualizar(`/srv`, srvFinal);
+            toast("Formulário enviado com sucesso", { description: new Date().toLocaleString(navigator.language, {
+                    weekday: 'long', month: 'long', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true 
+                }),
+                style: { color: "#2E8B57",
+                },
+            });
+        }
+        catch(erro: any){
+            toast("Erro ao enviar o formulário", { description: `Erro: ${erro}` });
+        }
+
+        setLoader(false);
+        limparFormulario();
+
+    }
+
+    function limparFormulario() {
+        setUf("");
+        setLojaSelecionada("");
+        setListaLoja([]);
+        setSrv({} as Srv);
+        setSrvSelecionado("");
+        setData(undefined);
+        setTecnico("");
+        setAntes([]);
+        setDepois([]);
+        setStatus("");
+        setIntercorrencia("");
+
+        if (inputAntesRef.current) inputAntesRef.current.value = "";
+        if (inputDepoisRef.current) inputDepoisRef.current.value = "";
+    }
 
     return(
         <>
-            <form >
+            <form onSubmit={(e) => atualizarSrv(e)}>
                 <div className="h-vh flex justify-center items-center">
-                    <Card className="w-screen mx-6 lg:mx-60 xl:mx-110 my-16">
+                    <Card className="w-screen mx-6 lg:mx-60 xl:mx-90 my-16">
                         <CardHeader>
                             <div className="flex justify-center">
                                 <img className="my-5 w-50" src={itbackground} alt="Imagem da IT Universe"/>
@@ -114,7 +197,7 @@ export default function FormSrv(){
                                     <Label htmlFor="srv" className="mb-2">SRV { srvSelecionado ? ` - ${srv.modelo}` : "" }</Label>
                                     <Select value={srvSelecionado} onValueChange={setSrvSelecionado} required>
                                         <SelectTrigger id="srv">
-                                        <SelectValue placeholder="Selecione um SRV" />
+                                        <SelectValue placeholder="Selecione o SRV" />
                                         </SelectTrigger>
                                         <SelectContent position="popper">
                                             <SelectItem value={srv.id} key={srv.id}>{srv.id}</SelectItem>
@@ -123,6 +206,77 @@ export default function FormSrv(){
                                 </div>
 
                                 <Separator className="my-4"/>
+
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label>Data da troca</Label>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button variant={"outline"}
+                                                className={cn(
+                                                    "w-[150px] justify-start text-left font-normal",
+                                                    !data && "text-muted-foreground"
+                                                )}>
+                                            <CalendarIcon />
+                                                {data ? format(data, "dd/MM/yyyy") : <span>Data da visita</span>}
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="start">
+                                            <Calendar mode="single" locale={ptBR} selected={data} onSelect={setData} required/>
+                                        </PopoverContent>
+                                    </Popover>
+                                </div>
+
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="tecnico">Técnico</Label>
+                                    <Select value={tecnico} onValueChange={e => setTecnico(e)} required>
+                                        <SelectTrigger id="tecnico">
+                                        <SelectValue placeholder="Selecione o técnico" />
+                                        </SelectTrigger>
+                                        <SelectContent position="popper">
+                                            <SelectItem value="David Santos">David Santos</SelectItem>
+                                            <SelectItem value="Caleb Uchoa">Caleb Uchôa</SelectItem>
+                                            <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
+                                            <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
+                                            <SelectItem value="troubleshoot">Troubleshoot</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <div className="flex flex-col space-y-1.5 lg:w-1/2">
+                                    <Label htmlFor="antes">SRV Antes *Até 3 imagens</Label>
+                                    <Input id="antes" type="file" accept="image/*" multiple required ref={inputAntesRef}
+                                        onChange={(e) => {
+                                            const arquivosSelecionados = Array.from(e.target.files || []);
+                                            setAntes((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
+                                        }}/>
+                                </div>
+                                <div className="flex flex-col space-y-1.5 lg:w-1/2">
+                                    <Label htmlFor="depois">SRV Depois *Até 3 imagens</Label>
+                                    <Input id="antes" type="file" accept="image/*" multiple required ref={inputDepoisRef}
+                                        onChange={(e) => {
+                                            const arquivosSelecionados = Array.from(e.target.files || []);
+                                            setDepois((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="status">Status</Label>
+                                        <Select value={status} onValueChange={e => setStatus(e)} required>
+                                            <SelectTrigger id="status">
+                                            <SelectValue placeholder="Selecione o status" />
+                                            </SelectTrigger>
+                                            <SelectContent position="popper">
+                                                <SelectItem value="Realizado">Realizado</SelectItem>
+                                                <SelectItem value="Não realizado">Não realizado</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                </div>
+                                
+                                <div className="flex flex-col space-y-1.5 lg:w-1/2 max-h-40">
+                                    <Label htmlFor="intercorrencia">Intercorrências</Label>
+                                    <Textarea placeholder="Descreva brevemente o ocorrido, se necessário." value={intercorrencia} onChange={e => setIntercorrencia(e.target.value)} />
+                                </div>
 
                             </div>
                         </CardContent>

@@ -12,14 +12,13 @@ import itbackground from "../assets/itbackground.png";
 import lanterna from "../assets/lantern.png";
 import { Separator } from "@/components/ui/separator"
 import type Loja from "@/model/Loja"
-import { atualizar, buscar } from "@/service/service"
+import { atualizar, buscar, uploadBucketS3 } from "@/service/service"
 import type Pdv from "@/model/Pdv"
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
-import axios from "axios"
 import { useRef } from "react";
 
 
@@ -108,52 +107,23 @@ export default function FormPdv() {
     const [tecnico, setTecnico] = useState<string>("");
     useEffect(() => {if(tecnico) atualizarDadosPdv("tecnico", tecnico)}, [tecnico])
 
+    const inputAntesRef = useRef<HTMLInputElement>(null);
+    const inputDepoisRef = useRef<HTMLInputElement>(null);
+    const [antes, setAntes] = useState<File[]>([]);
+    const [depois, setDepois] = useState<File[]>([]);
+
     const [status, setStatus] = useState<string>("")
     useEffect(() => {if(status) atualizarDadosPdv("status", status)}, [status])
 
     const [intercorrencia, setIntercorrencia] = useState<string>("")
     useEffect(() => {if(intercorrencia) atualizarDadosPdv("intercorrencia", intercorrencia)}, [intercorrencia]);
 
-    const [antes, setAntes] = useState<File[]>([]);
-    const [depois, setDepois] = useState<File[]>([]);
-
-    const inputAntesRef = useRef<HTMLInputElement>(null);
-    const inputDepoisRef = useRef<HTMLInputElement>(null);
-
-    function atualizarDadosPdv(propriedade: string, valor: string){
+    function atualizarDadosPdv(atributo: string, valor: string){
         setPdv({
             ...pdv,
-            [propriedade]: valor
+            [atributo]: valor
         });
     }
-
-    const bucket = import.meta.env.VITE_BUCKET_NAME
-    const bucketUrl = `https://${bucket}.s3.amazonaws.com/imagens`;
-
-    const uploadBucketS3 = async (files: File[]) => {
-        
-        const urls: string[] = [];
-
-        for (const file of files) {
-            const fileName = `${Date.now()}-${file.name}`;
-            const s3Url = `${bucketUrl}/${fileName}`;
-
-            try{
-                await axios.put(s3Url, file, {
-                    headers: {
-                        "Content-Type": file.type,
-                    },
-                });
-            }
-            catch(erro: any){
-                toast("Erro ao fazer o upload das imagens", { description: `Erro: ${erro}` });
-            }
-
-            urls.push(s3Url); //URL pública permanente
-        }
-
-        return urls;
-    };
 
     async function atualizarPdv(e: FormEvent<HTMLFormElement>){
 
@@ -295,7 +265,7 @@ export default function FormPdv() {
                                 <Separator className="my-4"/>
 
                                 <div className="flex flex-col space-y-1.5">
-                                    <Label>Data da visita</Label>
+                                    <Label>Data da troca</Label>
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <Button variant={"outline"}
@@ -315,18 +285,18 @@ export default function FormPdv() {
                                 
                                 <div className="flex flex-col space-y-1.5">
                                     <Label htmlFor="tecnico">Técnico</Label>
-                                        <Select value={tecnico} onValueChange={e => setTecnico(e)} required>
-                                            <SelectTrigger id="tecnico">
-                                            <SelectValue placeholder="Selecione o técnico" />
-                                            </SelectTrigger>
-                                            <SelectContent position="popper">
-                                                <SelectItem value="David Santos">David Santos</SelectItem>
-                                                <SelectItem value="Caleb Uchoa">Caleb Uchôa</SelectItem>
-                                                <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
-                                                <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
-                                                <SelectItem value="troubleshoot">Troubleshoot</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                    <Select value={tecnico} onValueChange={e => setTecnico(e)} required>
+                                        <SelectTrigger id="tecnico">
+                                        <SelectValue placeholder="Selecione o técnico" />
+                                        </SelectTrigger>
+                                        <SelectContent position="popper">
+                                            <SelectItem value="David Santos">David Santos</SelectItem>
+                                            <SelectItem value="Caleb Uchoa">Caleb Uchôa</SelectItem>
+                                            <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
+                                            <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
+                                            <SelectItem value="troubleshoot">Troubleshoot</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
 
                                 <span>{
@@ -372,6 +342,7 @@ export default function FormPdv() {
                                             </SelectContent>
                                         </Select>
                                 </div>
+                                
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2 max-h-40">
                                     <Label htmlFor="intercorrencia">Intercorrências</Label>
                                     <Textarea placeholder="Descreva brevemente o ocorrido, se necessário." value={intercorrencia} onChange={e => setIntercorrencia(e.target.value)} />

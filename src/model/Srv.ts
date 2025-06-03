@@ -9,13 +9,12 @@ export default interface Srv{
     frequencia: string;
     observacao: string;
 
-    existe: boolean; //Existe PDV ?
     status: string;
     tecnico: string;
     dataTroca: Date;
     intercorrencia: string;
-    antes: string;
-    depois: string;
+    antes: string[];
+    depois: string[];
 
     loja: Loja;
 }
