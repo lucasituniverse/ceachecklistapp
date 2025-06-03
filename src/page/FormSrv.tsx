@@ -9,17 +9,14 @@ import { useEffect, useState, type FormEvent } from "react";
 import { cn } from "@/lib/utils"
 import { MoonLoader } from "react-spinners";
 import itbackground from "../assets/itbackground.png";
-import lanterna from "../assets/lantern.png";
 import { Separator } from "@/components/ui/separator"
 import type Loja from "@/model/Loja"
 import { atualizar, buscar, uploadBucketS3 } from "@/service/service"
-import type Pdv from "@/model/Pdv"
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
-import axios from "axios"
 import { useRef } from "react";
 import type Srv from "@/model/Srv"
 
