@@ -285,8 +285,8 @@ export default function FormSrv(){
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-end mt-4">
-                            <Button type="submit" className="cursor-pointer"
-                                onClick={() => setLoader(true)}>{ loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }
+                            <Button type="submit" className="cursor-pointer">
+                                { loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }
                             </Button>
                         </CardFooter>
                     </Card>
