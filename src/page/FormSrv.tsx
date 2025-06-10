@@ -143,7 +143,6 @@ export default function FormSrv(){
                                     <CardTitle>Checklist SRVs</CardTitle>
                                     <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
                                 </div>
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/pdv")}>Checklist PDV</Button>
                             </div>
                         </CardHeader>
                         <CardContent>
@@ -284,7 +283,8 @@ export default function FormSrv(){
 
                             </div>
                         </CardContent>
-                        <CardFooter className="flex justify-end mt-4">
+                        <CardFooter className="flex justify-between mt-4">
+                            <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/pdv")}>Checklist PDV</Button>
                             <Button type="submit" className="cursor-pointer">
                                 { loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }
                             </Button>
