@@ -130,15 +130,14 @@ export default function FormPdv() {
     async function atualizarPdv(e: FormEvent<HTMLFormElement>){
 
         e.preventDefault();
+        console.log("atualizarPdv foi chamada");
         setLoader(true);
 
-        const ImagensAntes = await uploadBucketS3(antes);
-        const ImagensDepois = await uploadBucketS3(depois);
+        // const ImagensAntes = await uploadBucketS3(antes);
+        // const ImagensDepois = await uploadBucketS3(depois);
 
         const pdvFinal: Pdv = {
-            ...pdv,
-            antes: ImagensAntes,
-            depois: ImagensDepois
+            ...pdv
         };
 
         try{
@@ -200,30 +199,7 @@ export default function FormPdv() {
                                         <SelectValue placeholder="Selecione o Estado" />
                                         </SelectTrigger>
                                         <SelectContent position="popper">
-                                            <SelectItem value="AC">Acre</SelectItem>
-                                            <SelectItem value="AL">Alagoas</SelectItem>
-                                            <SelectItem value="AM">Amazonas</SelectItem>
-                                            <SelectItem value="BA">Bahia</SelectItem>
-                                            <SelectItem value="CE">Ceará</SelectItem>
-                                            <SelectItem value="DF">Distrito Federal</SelectItem>
-                                            <SelectItem value="GO">Goiás</SelectItem>
-                                            <SelectItem value="MA">Maranhão</SelectItem>
                                             <SelectItem value="MG">Minas Gerais</SelectItem>
-                                            <SelectItem value="MT">Mato Grosso</SelectItem>
-                                            <SelectItem value="MS">Mato Grosso do Sul</SelectItem>
-                                            <SelectItem value="PA">Pará</SelectItem>
-                                            <SelectItem value="PB">Paraíba</SelectItem>
-                                            <SelectItem value="PE">Pernambuco</SelectItem>
-                                            <SelectItem value="PI">Piauí</SelectItem>
-                                            <SelectItem value="PR">Paraná</SelectItem>
-                                            <SelectItem value="RJ">Rio de Janeiro</SelectItem>
-                                            <SelectItem value="RN">Rio Grande do Norte</SelectItem>
-                                            <SelectItem value="RO">Rondônia</SelectItem>
-                                            <SelectItem value="RR">Roraíma</SelectItem>
-                                            <SelectItem value="RS">Rio Grande do Sul</SelectItem>
-                                            <SelectItem value="SC">Santa Catarina</SelectItem>
-                                            <SelectItem value="SE">Sergipe</SelectItem>
-                                            <SelectItem value="SP">São Paulo</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -321,7 +297,7 @@ export default function FormPdv() {
 
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
                                     <Label htmlFor="antes">PDV Antes *Até 3 imagens</Label>
-                                    <Input id="antes" type="file" accept="image/*" multiple required ref={inputAntesRef}
+                                    <Input id="antes" type="file" accept="image/*" multiple ref={inputAntesRef}
                                         onChange={(e) => {
                                             const arquivosSelecionados = Array.from(e.target.files || []);
                                             setAntes((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
@@ -329,7 +305,7 @@ export default function FormPdv() {
                                 </div>
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
                                     <Label htmlFor="depois">PDV Depois *Até 3 imagens</Label>
-                                    <Input id="antes" type="file" accept="image/*" multiple required ref={inputDepoisRef}
+                                    <Input id="antes" type="file" accept="image/*" multiple ref={inputDepoisRef}
                                         onChange={(e) => {
                                             const arquivosSelecionados = Array.from(e.target.files || []);
                                             setDepois((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
@@ -358,8 +334,8 @@ export default function FormPdv() {
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-end mt-4">
-                            <Button type="submit" className="cursor-pointer"
-                            onClick={() => setLoader(true)}>{ loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }</Button>
+                            <Button type="submit" className="cursor-pointer">
+                            { loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }</Button>
                         </CardFooter>
                     </Card>
                 </div>
