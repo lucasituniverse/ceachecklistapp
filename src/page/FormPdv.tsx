@@ -131,13 +131,13 @@ export default function FormPdv() {
         e.preventDefault();
         setLoader(true);
 
-        // const imagensAntes = await uploadBucketS3(antes);
-        // const imagensDepois = await uploadBucketS3(depois);
+        const imagensAntes = await uploadBucketS3(antes);
+        const imagensDepois = await uploadBucketS3(depois);
 
         const pdvFinal: Pdv = {
             ...pdv,
-            // antes: imagensAntes,
-            // depois: imagensDepois
+            antes: imagensAntes,
+            depois: imagensDepois
         };
 
         try{
