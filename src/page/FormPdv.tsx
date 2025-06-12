@@ -198,7 +198,30 @@ export default function FormPdv() {
                                         <SelectValue placeholder="Selecione o Estado" />
                                         </SelectTrigger>
                                         <SelectContent position="popper">
+                                            <SelectItem value="AC">Acre</SelectItem>
+                                            <SelectItem value="AL">Alagoas</SelectItem>
+                                            <SelectItem value="AM">Amazonas</SelectItem>
+                                            <SelectItem value="BA">Bahia</SelectItem>
+                                            <SelectItem value="CE">Ceará</SelectItem>
+                                            <SelectItem value="DF">Distrito Federal</SelectItem>
+                                            <SelectItem value="GO">Goiás</SelectItem>
+                                            <SelectItem value="MA">Maranhão</SelectItem>
                                             <SelectItem value="MG">Minas Gerais</SelectItem>
+                                            <SelectItem value="MT">Mato Grosso</SelectItem>
+                                            <SelectItem value="MS">Mato Grosso do Sul</SelectItem>
+                                            <SelectItem value="PA">Pará</SelectItem>
+                                            <SelectItem value="PB">Paraíba</SelectItem>
+                                            <SelectItem value="PE">Pernambuco</SelectItem>
+                                            <SelectItem value="PI">Piauí</SelectItem>
+                                            <SelectItem value="PR">Paraná</SelectItem>
+                                            <SelectItem value="RJ">Rio de Janeiro</SelectItem>
+                                            <SelectItem value="RN">Rio Grande do Norte</SelectItem>
+                                            <SelectItem value="RO">Rondônia</SelectItem>
+                                            <SelectItem value="RR">Roraíma</SelectItem>
+                                            <SelectItem value="RS">Rio Grande do Sul</SelectItem>
+                                            <SelectItem value="SC">Santa Catarina</SelectItem>
+                                            <SelectItem value="SE">Sergipe</SelectItem>
+                                            <SelectItem value="SP">São Paulo</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
