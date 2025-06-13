@@ -187,6 +187,7 @@ export default function FormPdv() {
                                     <CardTitle>Checklist PDVs</CardTitle>
                                     <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
                                 </div>
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/srv")}>Checklist SRV</Button>
                             </div>
                         </CardHeader>
                         <CardContent>
@@ -327,7 +328,7 @@ export default function FormPdv() {
                                 </div>
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
                                     <Label htmlFor="depois">PDV Depois *Até 3 imagens</Label>
-                                    <Input id="antes" type="file" accept="image/*" multiple ref={inputDepoisRef}
+                                    <Input id="depois" type="file" accept="image/*" multiple ref={inputDepoisRef}
                                         onChange={(e) => {
                                             const arquivosSelecionados = Array.from(e.target.files || []);
                                             setDepois((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
@@ -355,8 +356,7 @@ export default function FormPdv() {
 
                             </div>
                         </CardContent>
-                        <CardFooter className="flex justify-between mt-4">
-                            <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/srv")}>Checklist SRV</Button>
+                        <CardFooter className="flex justify-end mt-4">
                             <Button type="submit" className="cursor-pointer">
                             { loader ? <MoonLoader color="white" size={17} /> : <span>Enviar</span> }</Button>
                         </CardFooter>

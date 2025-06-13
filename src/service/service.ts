@@ -30,7 +30,6 @@ export const uploadBucketS3 = async (files: File[]) => {
     for (const file of files) {
         const fileName = `${Date.now()}-${file.name}`;
         const s3Url = `${bucketUrl}/${fileName}`;
-
         try{
             await axios.put(s3Url, file, {
                 headers: {
@@ -41,9 +40,7 @@ export const uploadBucketS3 = async (files: File[]) => {
         catch(erro: any){
             toast("Erro ao fazer o upload das imagens", { description: `Erro: ${erro}` });
         }
-
         urls.push(s3Url); //URL pública permanente
     }
-
     return urls;
 };
