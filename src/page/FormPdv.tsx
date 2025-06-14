@@ -187,6 +187,9 @@ export default function FormPdv() {
                                     <CardTitle>Checklist PDVs</CardTitle>
                                     <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
                                 </div>
+                            </div>
+                            <div className="flex justify-end gap-2 mt-2">
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/createpdv")}>Criar PDV</Button>
                                 <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/srv")}>Checklist SRV</Button>
                             </div>
                         </CardHeader>

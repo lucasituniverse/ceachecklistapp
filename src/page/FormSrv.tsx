@@ -143,6 +143,9 @@ export default function FormSrv(){
                                     <CardTitle>Checklist SRVs</CardTitle>
                                     <CardDescription>Checklist de projetos da IT Universe feito para C&A</CardDescription>
                                 </div>
+                            </div>
+                            <div className="flex justify-end gap-2 mt-2">
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/createpdv")}>Criar PDV</Button>
                                 <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/pdv")}>Checklist PDV</Button>
                             </div>
                         </CardHeader>
