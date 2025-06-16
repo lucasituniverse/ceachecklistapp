@@ -129,6 +129,11 @@ export default function FormSrv(){
         if (inputDepoisRef.current) inputDepoisRef.current.value = "";
     }
 
+    function redirecionar(url: string){
+        limparFormulario();
+        navigate(`/${url}`)
+    }
+
     return(
         <>
             <form onSubmit={(e) => atualizarSrv(e)}>
@@ -145,8 +150,8 @@ export default function FormSrv(){
                                 </div>
                             </div>
                             <div className="flex justify-end gap-2 mt-2">
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/createpdv")}>Criar PDV</Button>
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/pdv")}>Checklist PDV</Button>
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/createpdv")}>Criar PDV</Button>
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/pdv")}>Checklist PDV</Button>
                             </div>
                         </CardHeader>
                         <CardContent>
