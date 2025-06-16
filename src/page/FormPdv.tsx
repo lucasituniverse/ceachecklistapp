@@ -309,6 +309,7 @@ export default function FormPdv() {
                                             <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
                                             <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
                                             <SelectItem value="Rafael Bastos">Enilson Melo</SelectItem>
+                                            <SelectItem value="Rafael Bastos">Guilherme Assunção</SelectItem>
                                             <SelectItem value="troubleshoot">Troubleshoot</SelectItem>
                                         </SelectContent>
                                     </Select>
