@@ -304,12 +304,13 @@ export default function FormPdv() {
                                         <SelectValue placeholder="Selecione o técnico" />
                                         </SelectTrigger>
                                         <SelectContent position="popper">
+                                            <SelectItem value="Rafael Bastos">Adriano Rocha</SelectItem>
+                                            <SelectItem value="Caleb Uchoa">Caleb Uchoa</SelectItem>
                                             <SelectItem value="David Santos">David Santos</SelectItem>
-                                            <SelectItem value="Caleb Uchoa">Caleb Uchôa</SelectItem>
-                                            <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
-                                            <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
                                             <SelectItem value="Rafael Bastos">Enilson Melo</SelectItem>
                                             <SelectItem value="Rafael Bastos">Guilherme Assunção</SelectItem>
+                                            <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
+                                            <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
                                             <SelectItem value="troubleshoot">Troubleshoot</SelectItem>
                                         </SelectContent>
                                     </Select>
