@@ -85,10 +85,10 @@ export default function FormCreatePdv(){
         }
 
         setLoader(false);
-        limparDados();
+        limparFormulario();
     }
 
-    function limparDados(){
+    function limparFormulario(){
         setUf("");
         setListaLoja([]);
         setLojaSelecionada("");
@@ -100,6 +100,12 @@ export default function FormCreatePdv(){
         setTag("");
         setFrequencia("");
     }
+
+    function redirecionar(url: string){
+        limparFormulario();
+        navigate(`${url}`)
+    }
+
     return(
         <>
             <form onSubmit={(e) => {criarPdv(e)}}>
@@ -116,8 +122,8 @@ export default function FormCreatePdv(){
                                 </div>
                             </div>
                             <div className="flex justify-end gap-2 mt-2">
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/pdv")}>Checklist PDV</Button>
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => navigate("/srv")}>Checklist SRV</Button>
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/pdv")}>Checklist PDV</Button>
+                                <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/srv")}>Checklist SRV</Button>
                             </div>
                         </CardHeader>
                         <CardContent>
