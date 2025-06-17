@@ -105,7 +105,7 @@ export default function FormPdv() {
     useEffect(() => { if(pdvExiste) atualizarDadosPdv("existe", pdvExiste)}, [pdvExiste]);
 
     const [data, setData] = useState<Date>();
-    useEffect(() => {if(data) atualizarDadosPdv("dataTroca", data.toISOString())}, [data])
+    useEffect(() => {if(data) atualizarDadosPdv("dataTroca", data.toISOString().split("T")[0])}, [data])
 
     const [tecnico, setTecnico] = useState<string>("");
     useEffect(() => {if(tecnico) atualizarDadosPdv("tecnico", tecnico)}, [tecnico])
