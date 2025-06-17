@@ -45,7 +45,8 @@ export default function FormPdv() {
             await buscar(`/loja/uf/${uf}`, setListaLoja);
         }
         catch(erro: any){
-            toast("Erro ao buscar lojas", { description: `${erro}`,
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao buscar lojas", { description: `${mensagemErro}`,
                 style: { color: "#FF6347",
                 },
             });
@@ -60,7 +61,8 @@ export default function FormPdv() {
             await buscar(`/loja/${loja}`, setLoja);
         }
         catch(erro: any){
-            toast("Erro ao buscar Loja", { description: `${erro}`,
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao buscar Loja", { description: `${mensagemErro}`,
                 style: { color: "#FF6347",
                 },
             });
@@ -75,7 +77,8 @@ export default function FormPdv() {
             await buscar(`/pdv/loja/${loja}`, setListaPdvs);
         }
         catch(erro: any){
-            toast("Erro ao buscar PDVs", { description: `${erro}`,
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao buscar PDVs", { description: `${mensagemErro}}`,
                 style: { color: "#FF6347",
                 },
             });
@@ -90,8 +93,8 @@ export default function FormPdv() {
             await buscar(`/pdv/${id}`, setPdv);
         }
         catch(erro: any){
-            toast("", { description: `Erro: ${erro}` });
-            toast("Erro ao buscar PDVs", { description: `${erro}`,
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao buscar PDVs", { description: `${mensagemErro}`,
                 style: { color: "#FF6347",
                 },
             });
@@ -147,7 +150,8 @@ export default function FormPdv() {
             });
         }
         catch(erro: any){
-            toast("Erro ao enviar o formulário", { description: `Erro: ${erro}` });
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao enviar o formulário", { description: `Erro: ${mensagemErro}` });
         }
 
         setLoader(false);

@@ -34,7 +34,8 @@ export default function FormSrv(){
             await buscar(`/loja/uf/${uf}`, setListaLoja);
         }
         catch(erro: any){
-            toast("Erro ao buscar lojas", { description: `${erro}`,
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao buscar lojas", { description: `${mensagemErro}`,
                 style: { color: "#FF6347",
                 },
             });
@@ -50,7 +51,8 @@ export default function FormSrv(){
             await buscar(`/srv/loja/${idLoja}`, setSrv);
         }
         catch(erro: any){
-            toast("Erro ao buscar SRVs", { description: `${erro}`,
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao buscar SRVs", { description: `${mensagemErro}`,
                 style: { color: "#FF6347",
                 },
             });
@@ -104,7 +106,8 @@ export default function FormSrv(){
             });
         }
         catch(erro: any){
-            toast("Erro ao enviar o formulário", { description: `Erro: ${erro}` });
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao enviar o formulário", { description: `Erro: ${mensagemErro}` });
         }
 
         setLoader(false);

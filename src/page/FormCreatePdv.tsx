@@ -32,7 +32,8 @@ export default function FormCreatePdv(){
         try{
             await buscar(`/loja/uf/${uf}`, setListaLoja);
         } catch(erro: any){
-            toast("Erro ao buscar lojas", { description: `Erro: ${erro}` });
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao buscar lojas", { description: `Erro: ${mensagemErro}` });
         }
     }
 
@@ -42,7 +43,8 @@ export default function FormCreatePdv(){
         try{
             await buscar(`/loja/${idLoja}`, setLoja);
         }catch(erro: any){
-            toast("Erro ao buscar loja selecionada", { description: `Erro: ${erro}` });
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao buscar loja selecionada", { description: `Erro: ${mensagemErro}` });
         };
     }
     useEffect(() => { 
@@ -81,7 +83,8 @@ export default function FormCreatePdv(){
             await criar("/pdv", pdvFinal);
         }
         catch(erro: any) {
-            toast("Erro ao enviar ao criar PDV", { description: `Erro: ${erro}` });
+            const mensagemErro = erro.response?.data?.message || erro.message;
+            toast("Erro ao enviar ao criar PDV", { description: `Erro: ${mensagemErro}` });
         }
 
         setLoader(false);
