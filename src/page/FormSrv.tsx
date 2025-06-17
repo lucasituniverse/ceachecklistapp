@@ -60,7 +60,7 @@ export default function FormSrv(){
     }
 
     const [data, setData] = useState<Date>();
-    useEffect(() => {if(data) atualizarDadosSrv("dataTroca", data.toISOString())}, [data])
+    useEffect(() => {if(data) atualizarDadosSrv("dataTroca", data.toISOString().split("T")[0])}, [data])
 
     const [tecnico, setTecnico] = useState<string>("");
     useEffect(() => {if(tecnico) atualizarDadosSrv("tecnico", tecnico)},[tecnico])
