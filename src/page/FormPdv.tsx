@@ -102,7 +102,13 @@ export default function FormPdv() {
     }
 
     const [pdvExiste, setPdvExiste] = useState<string>("");
-    useEffect(() => { if(pdvExiste) atualizarDadosPdv("existe", pdvExiste)}, [pdvExiste]);
+    useEffect(() => { 
+        if (pdvExiste === "true") {
+            atualizarExistePdv("existe", true);
+        } else if (pdvExiste === "false") {
+            atualizarExistePdv("existe", false);
+        }
+    }, [pdvExiste]);
 
     const [data, setData] = useState<Date>();
     useEffect(() => {if(data) atualizarDadosPdv("dataTroca", data.toISOString().split("T")[0])}, [data])
@@ -120,6 +126,13 @@ export default function FormPdv() {
 
     const [intercorrencia, setIntercorrencia] = useState<string>("")
     useEffect(() => {if(intercorrencia) atualizarDadosPdv("intercorrencia", intercorrencia)}, [intercorrencia]);
+
+    function atualizarExistePdv(atributo: string, valor: boolean){
+        setPdv({
+            ...pdv,
+            [atributo]: valor
+        });
+    }
 
     function atualizarDadosPdv(atributo: string, valor: string){
         setPdv({
