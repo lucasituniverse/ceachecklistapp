@@ -22,7 +22,6 @@ import { Input } from "@/components/ui/input"
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom"
 
-
 export default function FormPdv() {
     
     const [loader, setLoader] = useState<Boolean>(false);
@@ -141,7 +140,7 @@ export default function FormPdv() {
         };
 
         try{
-            await atualizar(`/pdv`, pdvFinal);
+            await atualizar(`/pdv`, pdv);
             toast("Formulário enviado com sucesso", { description: dataAtual,
                 style: { color: "#2E8B57",
                 },
