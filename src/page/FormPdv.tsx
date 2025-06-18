@@ -156,7 +156,7 @@ export default function FormPdv() {
         };
 
         try{
-            await atualizar(`/pdv`, pdv);
+            await atualizar(`/pdv`, pdvFinal);
             toast("Formulário enviado com sucesso", { description: dataAtual,
                 style: { color: "#2E8B57",
                 },
