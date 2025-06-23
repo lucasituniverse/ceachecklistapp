@@ -153,7 +153,6 @@ export default function FormSrv(){
                                 </div>
                             </div>
                             <div className="flex justify-end gap-2 mt-2">
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/createpdv")}>Criar PDV</Button>
                                 <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/pdv")}>Checklist PDV</Button>
                             </div>
                         </CardHeader>
@@ -255,7 +254,8 @@ export default function FormSrv(){
                                             <SelectItem value="Rafael Bastos">Guilherme Assunção</SelectItem>
                                             <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
                                             <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
-                                            <SelectItem value="troubleshoot">Troubleshoot</SelectItem>
+                                            <SelectItem value="Autonomo">Autônomo</SelectItem>
+                                            <SelectItem value="Troubleshoot">Troubleshoot</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>

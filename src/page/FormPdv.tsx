@@ -210,7 +210,6 @@ export default function FormPdv() {
                                 </div>
                             </div>
                             <div className="flex justify-end gap-2 mt-2">
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/createpdv")}>Criar PDV</Button>
                                 <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/srv")}>Checklist SRV</Button>
                             </div>
                         </CardHeader>
@@ -327,7 +326,8 @@ export default function FormPdv() {
                                             <SelectItem value="Guilherme Assuncao">Guilherme Assunção</SelectItem>
                                             <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
                                             <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
-                                            <SelectItem value="troubleshoot">Troubleshoot</SelectItem>
+                                            <SelectItem value="Autonomo">Autônomo</SelectItem>
+                                            <SelectItem value="Troubleshoot">Troubleshoot</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -347,7 +347,7 @@ export default function FormPdv() {
 
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
                                     <Label htmlFor="antes">PDV Antes *Até 3 imagens</Label>
-                                    <Input id="antes" type="file" accept="image/*" multiple ref={inputAntesRef}
+                                    <Input id="antes" type="file" accept="image/*" multiple ref={inputAntesRef} required
                                         onChange={(e) => {
                                             const arquivosSelecionados = Array.from(e.target.files || []);
                                             setAntes((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
@@ -355,7 +355,7 @@ export default function FormPdv() {
                                 </div>
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
                                     <Label htmlFor="depois">PDV Depois *Até 3 imagens</Label>
-                                    <Input id="depois" type="file" accept="image/*" multiple ref={inputDepoisRef}
+                                    <Input id="depois" type="file" accept="image/*" multiple ref={inputDepoisRef} required
                                         onChange={(e) => {
                                             const arquivosSelecionados = Array.from(e.target.files || []);
                                             setDepois((prev) => [...prev, ...arquivosSelecionados].slice(0, 3));
