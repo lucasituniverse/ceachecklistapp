@@ -247,11 +247,11 @@ export default function FormSrv(){
                                         <SelectValue placeholder="Selecione o técnico" />
                                         </SelectTrigger>
                                         <SelectContent position="popper">
-                                            <SelectItem value="Rafael Bastos">Adriano Rocha</SelectItem>
+                                            <SelectItem value="Adriano Rocha">Adriano Rocha</SelectItem>
                                             <SelectItem value="Caleb Uchoa">Caleb Uchoa</SelectItem>
                                             <SelectItem value="David Santos">David Santos</SelectItem>
-                                            <SelectItem value="Rafael Bastos">Enilson Melo</SelectItem>
-                                            <SelectItem value="Rafael Bastos">Guilherme Assunção</SelectItem>
+                                            <SelectItem value="Enilson Melo">Enilson Melo</SelectItem>
+                                            <SelectItem value="Guilherme Assuncao">Guilherme Assunção</SelectItem>
                                             <SelectItem value="Jessie Rafael">Jessie Rafael</SelectItem>
                                             <SelectItem value="Rafael Bastos">Rafael Bastos</SelectItem>
                                             <SelectItem value="Autonomo">Autônomo</SelectItem>
