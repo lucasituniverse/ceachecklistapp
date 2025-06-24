@@ -293,7 +293,7 @@ export default function FormSrv(){
                                 
                                 <div className="flex flex-col space-y-1.5 lg:w-1/2 max-h-40">
                                     <Label htmlFor="intercorrencia">Intercorrências</Label>
-                                    <Textarea placeholder="Descreva brevemente o ocorrido, se necessário." value={intercorrencia} onChange={e => setIntercorrencia(e.target.value)} />
+                                    <Textarea placeholder="Descreva brevemente o ocorrido, se necessário." value={intercorrencia} onChange={e => setIntercorrencia(e.target.value)} required />
                                 </div>
 
                             </div>
