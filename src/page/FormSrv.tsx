@@ -19,7 +19,7 @@ import { toast } from "sonner"
 import { Input } from "@/components/ui/input"
 import { useRef } from "react";
 import type Srv from "@/model/Srv"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export default function FormSrv(){
 
@@ -132,9 +132,9 @@ export default function FormSrv(){
         if (inputDepoisRef.current) inputDepoisRef.current.value = "";
     }
 
-    function redirecionar(url: string){
+    function redirecionar(){
         limparFormulario();
-        navigate(`/${url}`)
+        navigate("/pdv")
     }
 
     return(
@@ -153,7 +153,7 @@ export default function FormSrv(){
                                 </div>
                             </div>
                             <div className="flex justify-end gap-2 mt-2">
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/pdv")}>Checklist PDV</Button>
+                                <Button variant="secondary" className="cursor-pointer" onClick={redirecionar}>Checklist PDV</Button>
                             </div>
                         </CardHeader>
                         <CardContent>

@@ -189,9 +189,9 @@ export default function FormPdv() {
         if (inputDepoisRef.current) inputDepoisRef.current.value = "";
     }
 
-    function redirecionar(url: string){
+    function redirecionar(){
         limparFormulario();
-        navigate(`${url}`)
+        navigate("/srv")
     }
 
     return (
@@ -210,7 +210,7 @@ export default function FormPdv() {
                                 </div>
                             </div>
                             <div className="flex justify-end gap-2 mt-2">
-                                <Button variant="secondary" className="cursor-pointer" onClick={() => redirecionar("/srv")}>Checklist SRV</Button>
+                                <Button variant="secondary" className="cursor-pointer" onClick={redirecionar}>Checklist SRV</Button>
                             </div>
                         </CardHeader>
                         <CardContent>
